@@ -5,20 +5,54 @@ import config from "../conf/index.js";
 function getCityFromURL(search) {
   // TODO: MODULE_ADVENTURES
   // 1. Extract the city id from the URL's Query Param and return it
-
+  let Url = new URLSearchParams(search);
+  let data = Url.get("city")
+  // console.log(data)
+  return data;
 }
 
 //Implementation of fetch call with a paramterized input based on city
 async function fetchAdventures(city) {
   // TODO: MODULE_ADVENTURES
   // 1. Fetch adventures using the Backend API and return the data
-
+try{
+  let response = await fetch(`${config.backendEndpoint}/adventures?city=${city}`)
+  let data = await response.json();
+  console.log(data)
+  return data
+}catch(e){
+  return null;
+}
 }
 
 //Implementation of DOM manipulation to add adventures for the given city from list of adventures
 function addAdventureToDOM(adventures) {
   // TODO: MODULE_ADVENTURES
   // 1. Populate the Adventure Cards and insert those details into the DOM
+  let dataId = document.getElementById("data");
+
+  for(let i=0;i<adventures.length;i++){
+    dataId.innerHTML += 
+    `<div class=" col-6 col-sm-6 col-lg-3 mb-4">
+        <a href="/pages/adventures/detail/?adventure=${adventures[i].id}" id="${adventures[i].id}">
+          <div class="card activity-card" id="${adventures[i].name}">
+          <div class="category-banner">${adventures[i].category}</div>
+             <img class="activity-card img" src="${adventures[i].image}" alt="${adventures[i].name} image">
+              <div class="card-body w-100  p-3 ">
+              <div class="d-md-flex justify-content-between">
+                <h5 class="card-title">${adventures[i].name}</h5>
+                 <p class="card-text">₹${adventures[i].costPerHead}</p>
+              </div>
+              <div class="d-md-flex justify-content-between">
+                <h5 class="card-title">Duration</h5>
+                 <p class="card-text">${adventures[i].duration}</p>
+              </div>
+             </div>
+               
+           </div>
+        </a>
+     </div>`
+  }
 
 }
 
