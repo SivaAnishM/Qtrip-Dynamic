@@ -45,7 +45,7 @@ function addAdventureToDOM(adventures) {
               </div>
               <div class="d-md-flex justify-content-between">
                 <h5 class="card-title">Duration</h5>
-                 <p class="card-text">${adventures[i].duration}</p>
+                 <p class="card-text">${adventures[i].duration} Hours</p>
               </div>
              </div>
                
