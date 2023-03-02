@@ -18,7 +18,7 @@ async function fetchAdventures(city) {
 try{
   let response = await fetch(`${config.backendEndpoint}/adventures?city=${city}`)
   let data = await response.json();
-  console.log(data)
+  // console.log(data)
   return data
 }catch(e){
   return null;
@@ -60,14 +60,30 @@ function addAdventureToDOM(adventures) {
 function filterByDuration(list, low, high) {
   // TODO: MODULE_FILTERS
   // 1. Filter adventures based on Duration and return filtered list
-
+let data = [];
+for(let i=0;i<list.length;i++){
+  if(list[i].duration >= low && list[i].duration <= high){
+  // console.log(list[i])
+    data.push(list[i])
+  }
+}
+return data;
 }
 
 //Implementation of filtering by category which takes in a list of adventures, list of categories to be filtered upon and returns a filtered list of adventures.
 function filterByCategory(list, categoryList) {
   // TODO: MODULE_FILTERS
   // 1. Filter adventures based on their Category and return filtered list
-
+  let data = [];
+  for(let j=0;j<categoryList.length;j++){
+   for(let i =0;i<list.length;i++){
+      if(list[i].category == categoryList[j]){
+        data.push(list[i])
+        // console.log(list[i])
+      }
+   }
+  }
+return data;
 }
 
 // filters object looks like this filters = { duration: "", category: [] };
@@ -81,17 +97,47 @@ function filterFunction(list, filters) {
   // TODO: MODULE_FILTERS
   // 1. Handle the 3 cases detailed in the comments above and return the filtered list of adventures
   // 2. Depending on which filters are needed, invoke the filterByDuration() and/or filterByCategory() methods
+ let filterfun = [];
 
+ console.log(filters.category,filters.duration)
+
+ if(((filters.duration) != "" && (filters.category).length>0)){
+  // fillert both duration and category
+  if(true){
+    let fillteredcat = filters.category;
+    filterfun = filterByCategory(list,fillteredcat);
+    list = filterfun;
+  }
+  
+  let filltereddur = (filters.duration).split("-");
+  let low = filltereddur[0],high =filltereddur[1]
+  filterfun = filterByDuration(list,low,high)
+
+ }else if((filters.duration) != "" && (filters.category).length == 0){
+  //fillter duration
+  let filltereddur = (filters.duration).split("-");
+  let low = filltereddur[0],high =filltereddur[1]
+  // console.log( list,low,high)
+  filterfun = filterByDuration(list,low,high)
+  
+ }else if((filters.duration) == "" && (filters.category).length != 0){
+  //filter category
+  let fillteredcat = filters.category;
+  filterfun = filterByCategory(list,fillteredcat)
+ }else{
+  filterfun = list
+ }
 
   // Place holder for functionality to work in the Stubs
-  return list;
+  return filterfun;
 }
 
 //Implementation of localStorage API to save filters to local storage. This should get called everytime an onChange() happens in either of filter dropdowns
 function saveFiltersToLocalStorage(filters) {
   // TODO: MODULE_FILTERS
   // 1. Store the filters as a String to localStorage
-
+  let Json = JSON.stringify(filters);
+  localStorage.setItem('filters',Json)
   return true;
 }
 
@@ -99,10 +145,11 @@ function saveFiltersToLocalStorage(filters) {
 function getFiltersFromLocalStorage() {
   // TODO: MODULE_FILTERS
   // 1. Get the filters from localStorage and return String read as an object
-
+  let data = localStorage.getItem("filters");
+  let value = JSON.parse(data)
 
   // Place holder for functionality to work in the Stubs
-  return null;
+  return value;
 }
 
 //Implementation of DOM manipulation to add the following filters to DOM :
@@ -112,6 +159,11 @@ function getFiltersFromLocalStorage() {
 function generateFilterPillsAndUpdateDOM(filters) {
   // TODO: MODULE_FILTERS
   // 1. Use the filters given as input, update the Duration Filter value and Generate Category Pills
+  for(let i=0;i<(filters.category).length;i++){
+    document.getElementById("category-list").innerHTML += `<div class ="category-filter">${filters.category[i]}</div>`
+}
+
+getFiltersFromLocalStorage();
 
 }
 export {
