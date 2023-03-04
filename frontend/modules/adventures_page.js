@@ -34,7 +34,7 @@ function addAdventureToDOM(adventures) {
   for(let i=0;i<adventures.length;i++){
     dataId.innerHTML += 
     `<div class=" col-6 col-sm-6 col-lg-3 mb-4">
-        <a href="/pages/adventures/detail/?adventure=${adventures[i].id}" id="${adventures[i].id}">
+        <a href="/frontend/pages/adventures/detail/?adventure=${adventures[i].id}" id="${adventures[i].id}">
           <div class="card activity-card" id="${adventures[i].name}">
           <div class="category-banner">${adventures[i].category}</div>
              <img class="activity-card img" src="${adventures[i].image}" alt="${adventures[i].name} image">
