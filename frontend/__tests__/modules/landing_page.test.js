@@ -61,5 +61,4 @@ describe("Landing Page Tests", function () {
       expect.stringContaining(expected)
     );
   });
-
 });
