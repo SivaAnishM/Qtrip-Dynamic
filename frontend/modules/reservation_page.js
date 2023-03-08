@@ -4,17 +4,63 @@ import config from "../conf/index.js";
 async function fetchReservations() {
   // TODO: MODULE_RESERVATIONS
   // 1. Fetch Reservations by invoking the REST API and return them
-
-
+  try{
+    let response = await fetch(`${config.backendEndpoint}/reservations`);
+    let json =  await response.json();
+    return json
+  }catch{
+    return null;
+  }
   // Place holder for functionality to work in the Stubs
-  return null;
 }
 
 //Function to add reservations to the table. Also; in case of no reservations, display the no-reservation-banner, else hide it.
 function addReservationToTable(reservations) {
   // TODO: MODULE_RESERVATIONS
   // 1. Add the Reservations to the HTML DOM so that they show up in the table
+  if(reservations.length != 0){
+    document.getElementById("no-reservation-banner").style.display = "none";
+    document.getElementById("reservation-table-parent").style.display = "block";
+  }else{
+    document.getElementById("no-reservation-banner").style.display = "block";
+    document.getElementById("reservation-table-parent").style.display = "none";
+  }
 
+  
+  let tbody = document.getElementById("reservation-table")
+  console.log(reservations)
+
+  for(let i=0;i<reservations.length;i++){
+
+  let date = new Date(reservations[i].date)
+  let newDate = date.toLocaleDateString("en-IN");
+  // console.log(newDate)
+  
+  let time =new Date(reservations[i].time);
+  let enIn = time.toLocaleTimeString('en-IN')
+  let optional = { year: 'numeric', month: 'long', day: 'numeric' };
+  let optionalenin = time.toLocaleDateString('en-IN', optional)
+  // let newTime = time.toLocaleTimeString("en-IN") 
+
+    tbody.innerHTML += ` 
+    <tr>
+    <td scope="col" id="${reservations[i].id}">
+      <a href="/frontend/pages/adventures/detail/?adventure=${reservations[i].adventure}">
+        <div style="font-weight: bold;">${reservations[i].id}</div>
+      </a>
+    </td>
+    <td scope="col">${reservations[i].name}</td>
+    <td scope="col">${reservations[i].adventureName}</td>
+    <td scope="col">${reservations[i].person}</td>
+    <td scope="col">${newDate}</td>
+    <td scope="col">${reservations[i].price}</td>
+    <td scope="col">${optionalenin}, ${enIn}</td>
+    <td scope="col" id="reservation-visit-button">
+      <a href="/frontend/pages/adventures/detail/?adventure=${reservations[i].adventure}">visit adventure</a>
+    </td>
+</tr>`
+  }
+ 
   //Conditionally render the no-reservation-banner and reservation-table-parent
 
   /*
