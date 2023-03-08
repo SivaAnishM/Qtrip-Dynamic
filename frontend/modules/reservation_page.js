@@ -45,7 +45,7 @@ function addReservationToTable(reservations) {
     tbody.innerHTML += ` 
     <tr>
     <td scope="col" id="${reservations[i].id}">
-      <a href="/frontend/pages/adventures/detail/?adventure=${reservations[i].adventure}">
+      <a href="/pages/adventures/detail/?adventure=${reservations[i].adventure}">
         <div style="font-weight: bold;">${reservations[i].id}</div>
       </a>
     </td>
@@ -56,7 +56,7 @@ function addReservationToTable(reservations) {
     <td scope="col">${reservations[i].price}</td>
     <td scope="col">${optionalenin}, ${enIn}</td>
     <td scope="col" id="reservation-visit-button">
-      <a href="/frontend/pages/adventures/detail/?adventure=${reservations[i].adventure}">visit adventure</a>
+      <a href="/pages/adventures/detail/?adventure=${reservations[i].adventure}">visit adventure</a>
     </td>
 </tr>`
   }
