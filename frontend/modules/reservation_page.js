@@ -12,8 +12,8 @@ async function fetchReservations() {
     return null;
   }
   // Place holder for functionality to work in the Stubs
+response
 }
-
 //Function to add reservations to the table. Also; in case of no reservations, display the no-reservation-banner, else hide it.
 function addReservationToTable(reservations) {
   // TODO: MODULE_RESERVATIONS
@@ -73,5 +73,6 @@ function addReservationToTable(reservations) {
   */
 
 }
+
 
 export { fetchReservations, addReservationToTable };

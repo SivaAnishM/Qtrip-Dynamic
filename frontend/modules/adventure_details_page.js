@@ -142,6 +142,7 @@ function captureFormSubmit(adventure) {
     let data = await respon.json();
     console.log(adventure.reserved)
     alert("success!")
+    window.location.reload();
    }catch{
     alert("Not Booked!!")
     }
